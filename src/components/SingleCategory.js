@@ -27,7 +27,7 @@ export const SingleCategory = ({ reviews }) => {
           <option>Vote count</option>
         </select>
       </form>
-      <ul>
+      <dl>
         {filteredReviews.map(
           ({
             review_id,
@@ -39,7 +39,7 @@ export const SingleCategory = ({ reviews }) => {
             votes,
           }) => {
             return (
-              <li key={review_id}>
+              <dt key={review_id}>
                 <ListReviewCard
                   review_id={review_id}
                   owner={owner}
@@ -49,11 +49,11 @@ export const SingleCategory = ({ reviews }) => {
                   created_at={created_at}
                   votes={votes}
                 />
-              </li>
+              </dt>
             );
           }
         )}
-      </ul>
+      </dl>
     </div>
   );
 };

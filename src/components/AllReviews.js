@@ -1,14 +1,6 @@
-import { useEffect } from 'react';
-import { getReviews } from '../Api';
 import { ListReviewCard } from './ListReviewCard';
 
-export const AllReviews = ({ reviews, setReviews }) => {
-  useEffect(() => {
-    getReviews().then(({ reviews }) => {
-      setReviews(reviews);
-    });
-  }, []);
-
+export const AllReviews = ({ reviews }) => {
   return (
     <div className="allreviews">
       <form className="sort_by">
@@ -24,7 +16,7 @@ export const AllReviews = ({ reviews, setReviews }) => {
         </select>
       </form>
 
-      <ul>
+      <dl>
         {reviews.map(
           ({
             review_id,
@@ -36,7 +28,7 @@ export const AllReviews = ({ reviews, setReviews }) => {
             votes,
           }) => {
             return (
-              <li key={review_id}>
+              <dt key={review_id}>
                 <ListReviewCard
                   review_id={review_id}
                   owner={owner}
@@ -46,11 +38,11 @@ export const AllReviews = ({ reviews, setReviews }) => {
                   created_at={created_at}
                   votes={votes}
                 />
-              </li>
+              </dt>
             );
           }
         )}
-      </ul>
+      </dl>
     </div>
   );
 };

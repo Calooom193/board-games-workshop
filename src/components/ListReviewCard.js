@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export const ListReviewCard = ({
   review_id,
   owner,
@@ -12,9 +14,13 @@ export const ListReviewCard = ({
       <h3>{title}</h3>
       <p>Author: {owner}</p> <p>{created_at}</p>
       <h4>Up votes: {votes}</h4>
+      <Link className="view-button" to={`/review/${review_id}`}>
+        View Review
+      </Link>
+      <br />
       <img className="list-img" src={review_img_url} alt={title} />
-      <p>category: {category}</p>
-      {/* turn category into link to category page */}
+      <br />
+      <Link to={`/reviews/${category}`}>{category}</Link>
     </div>
   );
 };
