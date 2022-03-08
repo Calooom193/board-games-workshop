@@ -1,38 +1,45 @@
+:root {
+  --steel-teal: #607b7d;
+  --deep-space-sparkle: #3a606e;
+  --xanadu: #828e82;
+  --laurel-green: #aaae8e;
+  --gainsboro: #e0e0e0;
+}
+
 .App {
   text-align: center;
+  background-color: var(--gainsboro);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header h1 {
+  background-color: var(--deep-space-sparkle);
+  margin: 0;
+  padding: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.list-img {
+  height: 200px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ul {
+  list-style-type: none;
+  padding-left: 0;
 }
 
-.App-link {
-  color: #61dafb;
+.list-review-card {
+  border: 10px solid var(--deep-space-sparkle);
+  padding: 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav {
+  background-color: var(--steel-teal);
+
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding: 0 30px;
+}
+
+a:link {
+  text-decoration: none;
+  padding: 1rem;
 }
