@@ -1,21 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { getReviews } from '../Api';
 import { ListReviewCard } from './ListReviewCard';
 
-export const SingleCategory = ({ reviews }) => {
-  const { category_name } = useParams();
-  const [filteredReviews, setFilteredReviews] = useState([]);
+export const SingleCategory = () => {
+  const { category } = useParams();
+  const [reviews, setReviews] = useState([]);
 
-  useState(() => {
-    setFilteredReviews(() => {
-      return reviews.filter((review) => review.category === category_name);
+  useEffect(() => {
+    getReviews(category).then(({ reviews }) => {
+      console.log(reviews);
+      setReviews(reviews);
     });
-  }, [category_name]);
+  }, [category]);
 
   return (
     <div className="single-category">
-      <h1>{category_name}</h1>
-      <form className="sort_by">
+      <h1>{category}</h1>
+      {/* <form className="sort_by">
         <label htmlFor="sortby">Sort by: </label>
         <select id="sortby">
           <option disabled selected>
@@ -26,9 +28,9 @@ export const SingleCategory = ({ reviews }) => {
           <option>Title</option>
           <option>Vote count</option>
         </select>
-      </form>
+      </form> */}
       <dl>
-        {filteredReviews.map(
+        {reviews.map(
           ({
             review_id,
             owner,

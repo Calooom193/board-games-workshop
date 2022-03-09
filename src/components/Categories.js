@@ -13,14 +13,12 @@ export const Categories = () => {
 
   return (
     <div className="categories">
-      <h2>Categories</h2>
       <ul className="category-list">
         {categories.map(({ description, slug }) => {
           return (
             <li key={slug}>
               <Link to={`/reviews/${slug}`}>
                 <h3>{slug}</h3>
-                <p>{description}</p>
               </Link>
             </li>
           );

@@ -1,9 +1,19 @@
+import { useEffect, useState } from 'react';
+import { getReviews } from '../Api';
 import { ListReviewCard } from './ListReviewCard';
 
-export const AllReviews = ({ reviews }) => {
+export const AllReviews = () => {
+
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    getReviews().then(({ reviews }) => {
+      setReviews(reviews);
+    });
+  }, []);
+
   return (
     <div className="allreviews">
-      <form className="sort_by">
+      {/* <form className="sort_by">
         <label htmlFor="sortby">Sort by: </label>
         <select id="sortby">
           <option disabled selected>
@@ -14,7 +24,7 @@ export const AllReviews = ({ reviews }) => {
           <option>Title</option>
           <option>Vote count</option>
         </select>
-      </form>
+      </form> */}
 
       <dl>
         {reviews.map(

@@ -12,7 +12,8 @@ export const ListReviewCard = ({
   return (
     <div className="list-review-card">
       <h3>{title}</h3>
-      <p>Author: {owner}</p> <p>{created_at}</p>
+      <p>Author: {owner}</p>{' '}
+      <p>Published: {String(created_at).substring(0, 10)}</p>
       <h4>Up votes: {votes}</h4>
       <Link className="view-button" to={`/review/${review_id}`}>
         View Review

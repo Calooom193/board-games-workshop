@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getReview } from '../Api';
+import { getReview, patchVotes } from '../Api';
 
 export const SingleReview = () => {
   const { review_id } = useParams();
@@ -11,6 +11,14 @@ export const SingleReview = () => {
       setReview(data.review[0]);
     });
   }, []);
+
+  const incVotes = (e) => {
+    console.log(e);
+    //make it so that the user can only like once for each review
+    patchVotes(review_id)
+      .then((data) => setReview(data.review[0]))
+      .catch((err) => console.log(err));
+  };
 
   const {
     title,
@@ -31,9 +39,7 @@ export const SingleReview = () => {
           <h3>{title}</h3>
         </dt>
         <dt>{owner}</dt>
-        <dt>
-          <time dateTime={created_at}>{created_at}</time>
-        </dt>
+        <dt>Published: {String(created_at).substring(0, 10)}</dt>
         <dt>
           Category type:<Link to={`/reviews/${category}`}>{category}</Link>
         </dt>
@@ -45,8 +51,7 @@ export const SingleReview = () => {
           <p>{review_body}</p>
         </dt>
         <dt>
-          <button>Vote</button>
-          {votes}
+          <button onClick={incVotes}>Like</button> {votes}
         </dt>
       </dl>
     </div>
