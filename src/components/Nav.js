@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Categories } from './Categories';
 
 export const Nav = () => {
   return (
@@ -6,9 +7,7 @@ export const Nav = () => {
       <Link to={'/reviews'}>
         <h3>All Reviews</h3>
       </Link>
-      <Link to={'/categories'}>
-        <h3>Categories</h3>
-      </Link>
+      <Categories />
     </div>
   );
 };
