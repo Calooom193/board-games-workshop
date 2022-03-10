@@ -65,3 +65,8 @@ html {
   margin-bottom: 30px;
   color: var(--floral-white);
 }
+
+.hearts{
+  color: var(--unbleached-silk);
+  margin-right: 7px;
+}

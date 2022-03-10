@@ -18,8 +18,8 @@ export const getReview = (review_id) => {
   return gamesApi.get(`/reviews/${review_id}`).then((res) => res.data);
 };
 
-export const patchVotes = (review_id) => {
+export const patchVotes = (review_id, incNum) => {
   return gamesApi
-    .patch(`/reviews/${review_id}`, { votes: 1 })
+    .patch(`/reviews/${review_id}`, { votes: incNum })
     .then((res) => res.data);
 };

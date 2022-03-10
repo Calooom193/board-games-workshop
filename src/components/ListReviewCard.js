@@ -56,7 +56,7 @@ export const ListReviewCard = ({
       </CardActionArea>
       <CardActions sx={{ bgcolor: pink[900] }}>
         <Button size="small" color="warning">
-          <HeartButton /> {votes}
+          <p className="hearts">Hearts: </p> {votes}
         </Button>
         <LearnMoreButton review_id={review_id} />
       </CardActions>
