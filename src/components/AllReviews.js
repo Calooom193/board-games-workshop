@@ -5,12 +5,22 @@ import { Nav } from './Nav';
 
 export const AllReviews = () => {
   const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   useEffect(() => {
-    getReviews().then(({ reviews }) => {
-      setReviews(reviews);
-    });
+    setIsLoading(true);
+    getReviews()
+      .then(({ reviews }) => {
+        setIsLoading(false);
+        setReviews(reviews);
+      })
+      .catch((err) => {
+        setError(true);
+        console.log(err);
+      });
   }, []);
 
+  if (isLoading) return <h1>Loading...</h1>;
   return (
     <main className="allreviews">
       <Nav />

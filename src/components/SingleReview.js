@@ -17,25 +17,25 @@ import { GoHomeButton } from './GoHomeButton';
 export const SingleReview = () => {
   const { review_id } = useParams();
   const [review, setReview] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    getReview(review_id).then((data) => {
-      setReview(data.review[0]);
-    });
+    setIsLoading(true);
+    getReview(review_id)
+      .then((data) => {
+        setIsLoading(false);
+        setReview(data.review[0]);
+      })
+      .catch((err) => {
+        setError(true);
+        console.log(err);
+      });
   }, []);
-
-  const incVotes = (e) => {
-    console.log(e);
-    //make it so that the user can only like once for each review
-    patchVotes(review_id)
-      .then((data) => setReview(data.review[0]))
-      .catch((err) => console.log(err));
-  };
 
   const {
     title,
     review_img_url,
-    category,
     comment_count,
     created_at,
     designer,
@@ -44,6 +44,7 @@ export const SingleReview = () => {
     votes,
   } = review;
 
+  if (isLoading) return <h1>Loading...</h1>;
   return (
     <div className="single-review">
       <Card>
@@ -79,7 +80,7 @@ export const SingleReview = () => {
           </Typography>
           <Paper elevation={1} className="vote-button" sx={{ width: 100 }}>
             <Typography sx={{ bgcolor: pink[900] }}>
-              <HeartButton />
+              <HeartButton review_id={review_id} setReview={setReview} />
             </Typography>
             <Typography>{votes}</Typography>
           </Paper>
