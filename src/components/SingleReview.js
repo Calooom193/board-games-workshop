@@ -1,25 +1,22 @@
 import {
-  Button,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
-  Checkbox,
   Paper,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getReview, patchVotes } from '../Api';
 import { HeartButton } from './HeartButton';
-import { blueGrey, grey, lime, pink } from '@mui/material/colors';
+import { pink } from '@mui/material/colors';
 import { GoHomeButton } from './GoHomeButton';
 
 export const SingleReview = () => {
   const { review_id } = useParams();
   const [review, setReview] = useState({});
-  let navigate = useNavigate();
 
   useEffect(() => {
     getReview(review_id).then((data) => {
@@ -47,8 +44,6 @@ export const SingleReview = () => {
     votes,
   } = review;
 
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
   return (
     <div className="single-review">
       <Card>
@@ -63,6 +58,9 @@ export const SingleReview = () => {
           image={review_img_url}
           alt={title}
         />
+        <Typography variant="body2" color="text.secondary">
+          Game designer: {designer}
+        </Typography>
         <CardContent>
           <Typography
             className="single-review-title"
@@ -90,26 +88,3 @@ export const SingleReview = () => {
     </div>
   );
 };
-
-{
-  /* <dl>
-        <dt>
-          <h3>{title}</h3>
-        </dt>
-        <dt>{owner}</dt>
-        <dt>Published: {String(created_at).substring(0, 10)}</dt>
-        <dt>
-          Category type:<Link to={`/reviews/${category}`}>{category}</Link>
-        </dt>
-        <dt>
-          <img className="list-img" src={review_img_url} alt="" />
-        </dt>
-        <dt>designed by: {designer}</dt>
-        <dt>
-          <p>{review_body}</p>
-        </dt>
-        <dt>
-          <button onClick={incVotes}>Like</button> {votes}
-        </dt>
-      </dl> */
-}
