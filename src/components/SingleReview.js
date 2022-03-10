@@ -9,16 +9,19 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getReview, patchVotes } from '../Api';
+import { getReview } from '../Api';
 import { HeartButton } from './HeartButton';
 import { pink } from '@mui/material/colors';
 import { GoHomeButton } from './GoHomeButton';
+import { CommentsToggle } from './CommentsToggle';
+import { LoadingButton } from '@mui/lab';
 
 export const SingleReview = () => {
   const { review_id } = useParams();
   const [review, setReview] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [voteLoading, setVoteLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -80,10 +83,23 @@ export const SingleReview = () => {
           </Typography>
           <Paper elevation={1} className="vote-button" sx={{ width: 100 }}>
             <Typography sx={{ bgcolor: pink[900] }}>
-              <HeartButton review_id={review_id} setReview={setReview} />
+              <HeartButton
+                review_id={review_id}
+                setReview={setReview}
+                votes={votes}
+                setVoteLoading={setVoteLoading}
+                voteLoading={voteLoading}
+              />
             </Typography>
-            <Typography>{votes}</Typography>
+            <Typography>
+              {voteLoading ? (
+                <LoadingButton loading>Submit</LoadingButton>
+              ) : (
+                votes
+              )}
+            </Typography>
           </Paper>
+          <CommentsToggle review_id={review_id} comment_count={comment_count} />
         </CardContent>
       </Card>
     </div>
