@@ -66,7 +66,33 @@ html {
   color: var(--floral-white);
 }
 
-.hearts{
+.hearts {
   color: var(--unbleached-silk);
   margin-right: 7px;
+}
+
+.comment-item {
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment-author {
+  width: 0;
+  color: var(--fiery-rose);
+}
+
+.comment-date {
+  font-size: small;
+  color: var(--old-mauve);
+}
+
+.review-author {
+  color: var(--fiery-rose);
+}
+
+.heart-button {
+  border-radius: 5px;
+}
+
+.comment-list-title {
+  
 }
