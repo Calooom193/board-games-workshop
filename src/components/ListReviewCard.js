@@ -7,19 +7,7 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
-import {
-  amber,
-  blueGrey,
-  brown,
-  lime,
-  orange,
-  pink,
-  purple,
-  red,
-  teal,
-  yellow,
-} from '@mui/material/colors';
-import { HeartButton } from './HeartButton';
+import { blueGrey, orange, pink } from '@mui/material/colors';
 import { LearnMoreButton } from './LearnMoreButton';
 
 export const ListReviewCard = ({

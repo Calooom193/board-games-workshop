@@ -26,7 +26,7 @@ export const LearnMoreButton = ({ review_id }) => {
           navigate(`/review/${review_id}`);
         }}
       >
-        Learn more
+        Read more
       </Button>
     </ThemeProvider>
   );
