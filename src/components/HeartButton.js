@@ -17,12 +17,7 @@ const theme = createTheme({
   },
 });
 
-export const HeartButton = ({
-  review_id,
-  setReview,
-  setVoteLoading,
-  voteLoading,
-}) => {
+export const HeartButton = ({ review_id, setReview, setVoteLoading }) => {
   const [pressed, setPressed] = useState(null);
 
   const incVotes = (e) => {
@@ -31,7 +26,11 @@ export const HeartButton = ({
       patchVotes(review_id, 1)
         .then((data) => {
           setPressed(true);
-          setReview(data.review[0]);
+          setReview((currReview) => {
+            const newReview = { ...currReview };
+            newReview.votes = data.review[0].votes;
+            return newReview;
+          });
           setVoteLoading(false);
         })
         .catch((err) => console.log(err));
@@ -39,7 +38,11 @@ export const HeartButton = ({
       patchVotes(review_id, -1)
         .then((data) => {
           setPressed(false);
-          setReview(data.review[0]);
+          setReview((currReview) => {
+            const newReview = { ...currReview };
+            newReview.votes = data.review[0].votes;
+            return newReview;
+          });
           setVoteLoading(false);
         })
         .catch((err) => console.log(err));
