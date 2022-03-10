@@ -23,3 +23,7 @@ export const patchVotes = (review_id, incNum) => {
     .patch(`/reviews/${review_id}`, { votes: incNum })
     .then((res) => res.data);
 };
+
+export const getComments = (review_id) => {
+  return gamesApi.get(`/reviews/${review_id}/comments`).then((res) => res.data);
+};

@@ -75,14 +75,15 @@ export const SingleReview = () => {
             {title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {owner} | Published: {String(created_at).substring(0, 10)}
+            <span className="review-author">{owner}</span> | Published:{' '}
+            {String(created_at).substring(0, 10)}
           </Typography>
           <br />
           <Typography variant="body1" color="text.primary">
             <Paper elevation={3}>{review_body}</Paper>
           </Typography>
           <Paper elevation={1} className="vote-button" sx={{ width: 100 }}>
-            <Typography sx={{ bgcolor: pink[900] }}>
+            <Typography className="heart-button" sx={{ bgcolor: pink[900] }}>
               <HeartButton
                 review_id={review_id}
                 setReview={setReview}

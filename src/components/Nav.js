@@ -8,15 +8,15 @@ export const Nav = () => {
   const [selected, setSelected] = useState('');
   let navigate = useNavigate();
 
+  const handleChange = (e) => {
+    setSelected(e.target.value);
+  };
+
   useEffect(() => {
     getCategories().then(({ categories }) => {
       setCategories(categories);
     });
   }, []);
-
-  const handleChange = (e) => {
-    setSelected(e.target.value);
-  };
 
   useEffect(() => {
     if (!selected) return;
@@ -47,18 +47,3 @@ export const Nav = () => {
     </div>
   );
 };
-
-{
-  /* <form>
-        <label htmlFor="search">Change category: </label>
-        <select id="search" onChange={handleChange}>
-          <option disabled selected>
-            Select a category...
-          </option>
-          <option>All</option>
-          {categories.map((c) => {
-            return <option key={c.slug}>{c.slug}</option>;
-          })}
-        </select>
-      </form> */
-}
