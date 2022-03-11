@@ -3,9 +3,8 @@ import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import { pink } from '@mui/material/colors';
-import { createTheme, ThemeProvider, Typography } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material';
 import { patchVotes } from '../Api';
-import LoadingButton from '@mui/lab/LoadingButton';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 

@@ -27,3 +27,15 @@ export const patchVotes = (review_id, incNum) => {
 export const getComments = (review_id) => {
   return gamesApi.get(`/reviews/${review_id}/comments`).then((res) => res.data);
 };
+
+export const postComment = (review_id, username, body) => {
+  return gamesApi
+    .post(`/reviews/${review_id}/comments`, { username, body })
+    .then((res) => {
+      console.log(res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
+};

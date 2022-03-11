@@ -1,7 +1,16 @@
 import { LoadingButton } from '@mui/lab';
-import { Divider, List, ListItem, ListItemText } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
+} from '@mui/material';
+import { pink } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
-import { getComments } from '../Api';
+import { getComments, postComment } from '../Api';
 
 const style = {
   width: '100%',
@@ -13,6 +22,8 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
   const [comments, setComments] = useState([]);
   const [collapsed, setCollapsed] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [input, setInput] = useState('');
+  const [username] = useState('tickle122');
 
   useEffect(() => {
     setIsLoading(true);
@@ -27,6 +38,19 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
     }
   }, [collapsed]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    postComment(review_id, username, input).then((data) => {
+      setIsLoading(false);
+      setComments((currComments) => {
+        return [...currComments, data.comment[0]];
+      });
+    });
+    setCollapsed(false);
+    setInput('');
+  };
+
   if (isLoading) {
     return (
       <h2>
@@ -35,7 +59,12 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
     );
   }
   return (
-    <List sx={style} component="nav" aria-label="mailbox folders">
+    <List
+      className="comment-section"
+      sx={style}
+      component="nav"
+      aria-label="mailbox folders"
+    >
       <Divider />
       <h3
         onClick={() => {
@@ -66,6 +95,28 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
           </div>
         );
       })}
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <TextField
+          id="standard-basic"
+          label="Write a comment..."
+          variant="standard"
+          value={input}
+          onChange={(e) => {
+            setInput(e.target.value);
+          }}
+        />
+        <Button type="submit" sx={{ color: pink[900] }}>
+          Post
+        </Button>
+      </Box>
     </List>
   );
 };
