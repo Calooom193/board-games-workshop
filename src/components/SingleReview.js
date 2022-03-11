@@ -80,7 +80,7 @@ export const SingleReview = () => {
           </Typography>
           <br />
           <Typography variant="body1" color="text.primary">
-            <Paper elevation={3}>{review_body}</Paper>
+            {review_body}
           </Typography>
           <Paper elevation={1} className="vote-button" sx={{ width: 100 }}>
             <Typography className="heart-button" sx={{ bgcolor: pink[900] }}>

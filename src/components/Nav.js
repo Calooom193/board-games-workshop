@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getCategories } from '../Api';
 import { useNavigate } from 'react-router-dom';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { SortBy } from './SortBy';
 
 export const Nav = () => {
   const [categories, setCategories] = useState([]);
@@ -44,6 +45,7 @@ export const Nav = () => {
           })}
         </Select>
       </FormControl>
+      <SortBy />
     </div>
   );
 };

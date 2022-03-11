@@ -92,4 +92,6 @@ html {
 .heart-button {
   border-radius: 5px;
 }
-
+.comment-section {
+  margin: 0 auto;
+}

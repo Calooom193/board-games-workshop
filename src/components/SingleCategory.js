@@ -7,11 +7,10 @@ import { Nav } from './Nav';
 export const SingleCategory = () => {
   const { category } = useParams();
   const [reviews, setReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
     getReviews(category)
       .then(({ reviews }) => {
         setIsLoading(false);
