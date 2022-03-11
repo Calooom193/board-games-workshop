@@ -34,8 +34,5 @@ export const postComment = (review_id, username, body) => {
     .then((res) => {
       console.log(res.data);
       return res.data;
-    })
-    .catch((err) => {
-      console.log(err.response);
     });
 };

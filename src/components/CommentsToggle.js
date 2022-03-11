@@ -41,12 +41,16 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    postComment(review_id, username, input).then((data) => {
-      setIsLoading(false);
-      setComments((currComments) => {
-        return [...currComments, data.comment[0]];
+    postComment(review_id, username, input)
+      .then((data) => {
+        setIsLoading(false);
+        setComments((currComments) => {
+          return [...currComments, data.comment[0]];
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
     setCollapsed(false);
     setInput('');
   };

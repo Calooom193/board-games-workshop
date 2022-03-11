@@ -45,7 +45,7 @@ export const Nav = () => {
           })}
         </Select>
       </FormControl>
-      <SortBy />
+      {/* <SortBy /> */}
     </div>
   );
 };
