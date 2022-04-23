@@ -35,11 +35,11 @@ export const Nav = () => {
           label="Change category"
           onChange={handleChange}
         >
-          <MenuItem value={'All'}>All</MenuItem>
+          <MenuItem value={'All'}>ALL</MenuItem>
           {categories.map((c) => {
             return (
               <MenuItem value={c.slug} key={c.slug}>
-                {c.slug}
+                {c.slug.toUpperCase().replace(/-/g, ' ')}
               </MenuItem>
             );
           })}

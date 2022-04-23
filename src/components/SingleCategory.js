@@ -26,7 +26,9 @@ export const SingleCategory = () => {
   return (
     <main className="single-category">
       <Nav />
-      <h1 className="category-name">{category}</h1>
+      <h1 className="category-name">
+        {category.toUpperCase().replace(/-/g, ' ')}
+      </h1>
       {reviews.map(
         ({
           review_id,

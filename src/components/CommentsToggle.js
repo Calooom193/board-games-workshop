@@ -7,6 +7,7 @@ import {
   ListItem,
   ListItemText,
   TextField,
+  Typography,
 } from '@mui/material';
 import { pink } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
@@ -84,16 +85,25 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
       {comments.map(({ author, body, created_at, comment_id }) => {
         return (
           <div key={comment_id}>
-            <ListItem className="comment-item" button>
-              <ListItemText className="comment-author" primary={author} />
+            <ListItem className="comment-item" alignItems="flex-start">
               <ListItemText
-                primary={
-                  <p className="comment-date">
-                    | {String(created_at).substring(0, 10)}
-                  </p>
+                className="comment-author"
+                primary={author}
+                secondary={
+                  <>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {String(created_at).substring(0, 10)}
+                    </Typography>
+                    {` - ${body}`}
+                  </>
                 }
               />
-              <ListItemText primary={body} />
+
             </ListItem>
             <Divider />
           </div>
