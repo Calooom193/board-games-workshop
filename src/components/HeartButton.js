@@ -51,6 +51,7 @@ export const HeartButton = ({ review_id, setReview, setVoteLoading }) => {
   return (
     <ThemeProvider theme={theme}>
       <Checkbox
+        className="heart-button"
         onClick={incVotes}
         color="primary"
         {...label}

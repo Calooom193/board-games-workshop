@@ -17,6 +17,8 @@ const style = {
   width: '100%',
   maxWidth: 360,
   bgcolor: 'background.paper',
+  zIndex: 'tooltip',
+  mt: '5px',
 };
 
 export const CommentsToggle = ({ review_id, comment_count }) => {
@@ -70,6 +72,7 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
       component="nav"
       aria-label="mailbox folders"
     >
+      <br />
       <Divider />
       <h3
         onClick={() => {
@@ -103,7 +106,6 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
                   </>
                 }
               />
-
             </ListItem>
             <Divider />
           </div>
