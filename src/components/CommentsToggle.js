@@ -8,10 +8,25 @@ import {
   ListItemText,
   TextField,
   Typography,
+  createTheme,
+  ThemeProvider,
+  IconButton,
 } from '@mui/material';
-import { pink } from '@mui/material/colors';
+import { grey, pink } from '@mui/material/colors';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useEffect, useState } from 'react';
-import { getComments, postComment } from '../Api';
+import { deleteComment, getComments, postComment } from '../Api';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: grey[500],
+    },
+    secondary: {
+      main: pink[100],
+    },
+  },
+});
 
 const style = {
   width: '100%',
@@ -58,6 +73,16 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
     setInput('');
   };
 
+  const handleDelete = (id) => {
+    setIsLoading(true);
+    deleteComment(id).then(() => {
+      setIsLoading(false);
+      setComments((currComments) => {
+        return currComments.filter((comment) => comment.comment_id !== id);
+      });
+    });
+  };
+
   if (isLoading) {
     return (
       <h2>
@@ -82,34 +107,71 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
         }}
         className="comment-list-title"
       >
-        Comments ({comment_count})
+        View Comments
       </h3>
       <Divider />
       {comments.map(({ author, body, created_at, comment_id }) => {
-        return (
-          <div key={comment_id}>
-            <ListItem className="comment-item" alignItems="flex-start">
-              <ListItemText
-                className="comment-author"
-                primary={author}
-                secondary={
-                  <>
-                    <Typography
-                      sx={{ display: 'inline' }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      {String(created_at).substring(0, 10)}
-                    </Typography>
-                    {` - ${body}`}
-                  </>
-                }
-              />
-            </ListItem>
-            <Divider />
-          </div>
-        );
+        if (author === username) {
+          return (
+            <div key={comment_id}>
+              <ListItem className="comment-item" alignItems="flex-start">
+                <ListItemText
+                  className="comment-author"
+                  primary={author}
+                  secondary={
+                    <>
+                      <Typography
+                        sx={{ display: 'inline' }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {String(created_at).substring(0, 10)}
+                      </Typography>
+                      {` - ${body}`}
+                    </>
+                  }
+                />
+                <ThemeProvider theme={theme}>
+                  <IconButton
+                    size="small"
+                    aria-label="delete"
+                    variant="outlined"
+                    onClick={() => handleDelete(comment_id)}
+                  >
+                    <DeleteIcon fontSize="inherit" />
+                  </IconButton>
+                </ThemeProvider>
+              </ListItem>
+              <Divider />
+            </div>
+          );
+        } else {
+          return (
+            <div key={comment_id}>
+              <ListItem className="comment-item" alignItems="flex-start">
+                <ListItemText
+                  className="comment-author"
+                  primary={author}
+                  secondary={
+                    <>
+                      <Typography
+                        sx={{ display: 'inline' }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {String(created_at).substring(0, 10)}
+                      </Typography>
+                      {` - ${body}`}
+                    </>
+                  }
+                />
+              </ListItem>
+              <Divider />
+            </div>
+          );
+        }
       })}
       <Box
         component="form"

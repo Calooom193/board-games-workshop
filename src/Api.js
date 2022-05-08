@@ -36,3 +36,8 @@ export const postComment = (review_id, username, body) => {
       return res.data;
     });
 };
+
+export const deleteComment = (review_id) => {
+  return gamesApi
+    .delete(`/comments/${review_id}`)
+};
