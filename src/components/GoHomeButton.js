@@ -19,6 +19,7 @@ export const GoHomeButton = ({ review_id }) => {
   let navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
+      {/* TURN INTO A ICON BUTTON AND DO useNavigate BACK HOME WHILE RESETTING CATEGORY */}
       <Link component="button" color="primary" variant="body2" to={'/'}>
         Go Home
       </Link>

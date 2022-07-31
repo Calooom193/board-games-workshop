@@ -4,14 +4,20 @@ import { getReviews } from '../Api';
 import { ListReviewCard } from './ListReviewCard';
 import { Nav } from './Nav';
 
-export const SingleCategory = () => {
+export const SingleCategory = ({
+  sortSelected,
+  setSortSelected,
+  categorySelected,
+  setCategorySelected,
+  categories,
+}) => {
   const { category } = useParams();
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    getReviews(category)
+    getReviews(category, sortSelected)
       .then(({ reviews }) => {
         setIsLoading(false);
         setReviews(reviews);
@@ -20,12 +26,18 @@ export const SingleCategory = () => {
         setError(true);
         console.log(err);
       });
-  }, [category]);
+  }, [category, sortSelected]);
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
     <main className="single-category">
-      <Nav />
+      <Nav
+        sortSelected={sortSelected}
+        setSortSelected={setSortSelected}
+        categorySelected={categorySelected}
+        setCategorySelected={setCategorySelected}
+        categories={categories}
+      />
       <h1 className="category-name">
         {category.toUpperCase().replace(/-/g, ' ')}
       </h1>

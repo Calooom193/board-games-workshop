@@ -3,14 +3,20 @@ import { getReviews } from '../Api';
 import { ListReviewCard } from './ListReviewCard';
 import { Nav } from './Nav';
 
-export const AllReviews = () => {
+export const AllReviews = ({
+  sortSelected,
+  setSortSelected,
+  categorySelected,
+  setCategorySelected,
+  categories
+}) => {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    getReviews()
+    getReviews(null, sortSelected)
       .then(({ reviews }) => {
         setIsLoading(false);
         setReviews(reviews);
@@ -19,12 +25,18 @@ export const AllReviews = () => {
         setError(true);
         console.log(err);
       });
-  }, []);
+  }, [sortSelected]);
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
     <main className="allreviews">
-      <Nav />
+      <Nav
+        sortSelected={sortSelected}
+        setSortSelected={setSortSelected}
+        categorySelected={categorySelected}
+        setCategorySelected={setCategorySelected}
+        categories={categories}
+      />
       {reviews.map(
         ({
           review_id,

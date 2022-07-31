@@ -4,9 +4,13 @@ const gamesApi = axios.create({
   baseURL: 'https://callums-game-reviews.herokuapp.com/api',
 });
 
-export const getReviews = (category) => {
+export const getReviews = (category, sortSelected, order) => {
+  let sort_by;
+  if (sortSelected === '') {
+    sort_by = null;
+  }
   return gamesApi
-    .get('/reviews', { params: { category } })
+    .get('/reviews', { params: { category, sort_by, order } })
     .then((res) => res.data);
 };
 
@@ -38,6 +42,9 @@ export const postComment = (review_id, username, body) => {
 };
 
 export const deleteComment = (review_id) => {
-  return gamesApi
-    .delete(`/comments/${review_id}`)
+  return gamesApi.delete(`/comments/${review_id}`);
+};
+
+export const getUsers = () => {
+  return gamesApi.get(`/users`).then((res) => res.data);
 };

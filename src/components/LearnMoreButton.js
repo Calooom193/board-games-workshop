@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const theme = createTheme({
   palette: {
     primary: {
-      // Purple and green play nicely together.
+      
       main: pink[50],
     },
     secondary: {

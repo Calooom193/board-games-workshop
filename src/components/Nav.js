@@ -1,28 +1,30 @@
-import { useEffect, useState } from 'react';
-import { getCategories } from '../Api';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { SortBy } from './SortBy';
 
-export const Nav = () => {
-  const [categories, setCategories] = useState([]);
-  const [selected, setSelected] = useState('');
+export const Nav = ({
+  sortSelected,
+  setSortSelected,
+  categorySelected,
+  setCategorySelected,
+  categories,
+}) => {
   let navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setSelected(e.target.value);
+  const handleSortChange = (e) => {
+    setSortSelected(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setCategorySelected(e.target.value);
   };
 
   useEffect(() => {
-    getCategories().then(({ categories }) => {
-      setCategories(categories);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!selected) return;
-    selected === 'All' ? navigate(`/`) : navigate(`/reviews/${selected}`);
-  }, [selected]);
+    if (!categorySelected) return;
+    categorySelected === 'All'
+      ? navigate(`/`)
+      : navigate(`/reviews/${categorySelected}`);
+  }, [categorySelected]);
 
   return (
     <div className="nav">
@@ -31,9 +33,10 @@ export const Nav = () => {
         <Select
           labelId="category-select"
           id="category-select"
-          value={selected}
+          defaultValue={''}
+          value={categorySelected}
           label="Change category"
-          onChange={handleChange}
+          onChange={handleCategoryChange}
         >
           <MenuItem value={'All'}>ALL</MenuItem>
           {categories.map((c) => {
@@ -45,7 +48,24 @@ export const Nav = () => {
           })}
         </Select>
       </FormControl>
-      {/* <SortBy /> */}
+      <div className="sort-by">
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <InputLabel id="sort-by-select">Sort by</InputLabel>
+          <Select
+            labelId="sort-by-select"
+            id="sort-by-select"
+            defaultValue={''}
+            value={sortSelected}
+            label="Sort"
+            onChange={handleSortChange}
+          >
+            <MenuItem value={'title'}>Title</MenuItem>
+            <MenuItem value={'votes'}>Votes</MenuItem>
+            <MenuItem value={'owner'}>Author</MenuItem>
+            <MenuItem value={'created_at'}>Date</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
     </div>
   );
 };
