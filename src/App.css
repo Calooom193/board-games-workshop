@@ -88,3 +88,7 @@ html {
 .heart-button {
   border-radius: 5px;
 }
+
+.order-toggle {
+  margin: 20px;
+}

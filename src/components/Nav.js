@@ -8,6 +8,8 @@ export const Nav = ({
   categorySelected,
   setCategorySelected,
   categories,
+  order,
+  setOrder,
 }) => {
   let navigate = useNavigate();
 
@@ -17,6 +19,10 @@ export const Nav = ({
 
   const handleCategoryChange = (e) => {
     setCategorySelected(e.target.value);
+  };
+
+  const handleOrder = () => {
+    setOrder(order === 'ASC' ? 'DESC' : 'ASC');
   };
 
   useEffect(() => {
@@ -65,6 +71,41 @@ export const Nav = ({
             <MenuItem value={'created_at'}>Date</MenuItem>
           </Select>
         </FormControl>
+        <div className="order-toggle">
+          {order === 'ASC' ? (
+            <svg
+              onClick={handleOrder}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="1"
+              width="24px"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 11l7-7 7 7M5 19l7-7 7 7"
+              />
+            </svg>
+          ) : (
+            <svg
+              onClick={handleOrder}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1"
+              width="24px"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
+              />
+            </svg>
+          )}
+        </div>
       </div>
     </div>
   );

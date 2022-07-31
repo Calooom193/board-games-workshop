@@ -8,7 +8,9 @@ export const AllReviews = ({
   setSortSelected,
   categorySelected,
   setCategorySelected,
-  categories
+  categories,
+  order,
+  setOrder,
 }) => {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +18,7 @@ export const AllReviews = ({
 
   useEffect(() => {
     setIsLoading(true);
-    getReviews(null, sortSelected)
+    getReviews(null, sortSelected, order)
       .then(({ reviews }) => {
         setIsLoading(false);
         setReviews(reviews);
@@ -25,7 +27,7 @@ export const AllReviews = ({
         setError(true);
         console.log(err);
       });
-  }, [sortSelected]);
+  }, [sortSelected, order]);
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
@@ -36,6 +38,8 @@ export const AllReviews = ({
         categorySelected={categorySelected}
         setCategorySelected={setCategorySelected}
         categories={categories}
+        order={order}
+        setOrder={setOrder}
       />
       {reviews.map(
         ({

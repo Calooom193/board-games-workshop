@@ -8,6 +8,8 @@ export const getReviews = (category, sortSelected, order) => {
   let sort_by;
   if (sortSelected === '') {
     sort_by = null;
+  } else {
+    sort_by = sortSelected;
   }
   return gamesApi
     .get('/reviews', { params: { category, sort_by, order } })

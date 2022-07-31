@@ -10,6 +10,8 @@ export const SingleCategory = ({
   categorySelected,
   setCategorySelected,
   categories,
+  order,
+  setOrder,
 }) => {
   const { category } = useParams();
   const [reviews, setReviews] = useState([]);
@@ -17,7 +19,7 @@ export const SingleCategory = ({
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    getReviews(category, sortSelected)
+    getReviews(category, sortSelected, order)
       .then(({ reviews }) => {
         setIsLoading(false);
         setReviews(reviews);
@@ -26,7 +28,7 @@ export const SingleCategory = ({
         setError(true);
         console.log(err);
       });
-  }, [category, sortSelected]);
+  }, [category, sortSelected, order]);
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
@@ -37,6 +39,8 @@ export const SingleCategory = ({
         categorySelected={categorySelected}
         setCategorySelected={setCategorySelected}
         categories={categories}
+        order={order}
+        setOrder={setOrder}
       />
       <h1 className="category-name">
         {category.toUpperCase().replace(/-/g, ' ')}

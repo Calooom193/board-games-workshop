@@ -12,6 +12,7 @@ function App() {
   const [sortSelected, setSortSelected] = useState('');
   const [categorySelected, setCategorySelected] = useState('');
   const [categories, setCategories] = useState([]);
+  const [order, setOrder] = useState('ASC');
 
   useEffect(() => {
     getCategories().then(({ categories }) => {
@@ -22,8 +23,10 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header setCategorySelected={setCategorySelected}
-        setSortSelected={setSortSelected} />
+        <Header
+          setCategorySelected={setCategorySelected}
+          setSortSelected={setSortSelected}
+        />
         <Routes>
           <Route
             path="/"
@@ -34,6 +37,8 @@ function App() {
                 categorySelected={categorySelected}
                 setCategorySelected={setCategorySelected}
                 categories={categories}
+                order={order}
+                setOrder={setOrder}
               />
             }
           />
@@ -46,6 +51,8 @@ function App() {
                 categorySelected={categorySelected}
                 setCategorySelected={setCategorySelected}
                 categories={categories}
+                order={order}
+                setOrder={setOrder}
               />
             }
           />
