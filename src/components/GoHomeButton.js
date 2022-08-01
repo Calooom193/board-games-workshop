@@ -17,12 +17,35 @@ const theme = createTheme({
 
 export const GoHomeButton = ({ review_id }) => {
   let navigate = useNavigate();
+
+  const handleHome = () => {
+    navigate('/');
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      {/* TURN INTO A ICON BUTTON AND DO useNavigate BACK HOME WHILE RESETTING CATEGORY */}
-      <Link component="button" color="primary" variant="body2" to={'/'}>
-        Go Home
-      </Link>
+      <div className="home-button" onClick={handleHome}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke={theme.palette.primary.main}
+          strokeWidth="2"
+          width="16px"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        <Button
+          variant="text"
+          sx={{ paddingLeft: '0px', justifyContent: 'left' }}
+        >
+          Back
+        </Button>
+      </div>
     </ThemeProvider>
   );
 };

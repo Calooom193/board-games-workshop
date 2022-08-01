@@ -1,6 +1,31 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { makeStyles } from '@material-ui/styles';
+import { pink } from '@mui/material/colors';
+
+const useStyles = makeStyles({
+  root: {
+    // input label when focused
+    '& label.Mui-focused': {
+      color: pink[900],
+    },
+    // focused color for input with variant='standard'
+    '& .MuiInput-underline:after': {
+      borderBottomColor: pink[900],
+    },
+    // focused color for input with variant='filled'
+    '& .MuiFilledInput-underline:after': {
+      borderBottomColor: pink[900],
+    },
+    // focused color for input with variant='outlined'
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused fieldset': {
+        borderColor: pink[900],
+      },
+    },
+  },
+});
 
 export const Nav = ({
   sortSelected,
@@ -12,6 +37,7 @@ export const Nav = ({
   setOrder,
 }) => {
   let navigate = useNavigate();
+  const classes = useStyles();
 
   const handleSortChange = (e) => {
     setSortSelected(e.target.value);
@@ -34,7 +60,7 @@ export const Nav = ({
 
   return (
     <div className="nav">
-      <FormControl fullWidth>
+      <FormControl className={classes.root} sx={{width: '50%', marginLeft: 1}}>
         <InputLabel id="category-select">Change category</InputLabel>
         <Select
           labelId="category-select"
@@ -54,23 +80,29 @@ export const Nav = ({
           })}
         </Select>
       </FormControl>
-      <div className="sort-by">
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-          <InputLabel id="sort-by-select">Sort by</InputLabel>
-          <Select
-            labelId="sort-by-select"
-            id="sort-by-select"
-            defaultValue={''}
-            value={sortSelected}
-            label="Sort"
-            onChange={handleSortChange}
+      <div className="order-container">
+        <div className="sort-by">
+          <FormControl
+            className={classes.root}
+            sx={{ m: 1, minWidth: 120 }}
+            size="small"
           >
-            <MenuItem value={'title'}>Title</MenuItem>
-            <MenuItem value={'votes'}>Votes</MenuItem>
-            <MenuItem value={'owner'}>Author</MenuItem>
-            <MenuItem value={'created_at'}>Date</MenuItem>
-          </Select>
-        </FormControl>
+            <InputLabel id="sort-by-select">Sort by</InputLabel>
+            <Select
+              labelId="sort-by-select"
+              id="sort-by-select"
+              defaultValue={''}
+              value={sortSelected}
+              label="Sort"
+              onChange={handleSortChange}
+            >
+              <MenuItem value={'title'}>Title</MenuItem>
+              <MenuItem value={'votes'}>Votes</MenuItem>
+              <MenuItem value={'owner'}>Author</MenuItem>
+              <MenuItem value={'created_at'}>Date</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
         <div className="order-toggle">
           {order === 'ASC' ? (
             <svg
@@ -95,7 +127,7 @@ export const Nav = ({
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              stroke-width="1"
+              strokeWidth="1"
               width="24px"
             >
               <path

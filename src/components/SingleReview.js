@@ -51,18 +51,21 @@ export const SingleReview = () => {
   return (
     <div className="single-review">
       <Card>
-        <CardActionArea>
-          <CardActions>
-            <GoHomeButton />
-          </CardActions>
-        </CardActionArea>
+        <GoHomeButton />
+
         <CardMedia
+          className="review-img"
           component="img"
-          height="140"
+          height="200"
           image={review_img_url}
           alt={title}
         />
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          className="designer-text"
+          variant="body2"
+          color="text.secondary"
+          sx={{ fontSize: '12px' }}
+        >
           Game designer: {designer}
         </Typography>
         <CardContent>
@@ -79,10 +82,14 @@ export const SingleReview = () => {
             {String(created_at).substring(0, 10)}
           </Typography>
           <br />
-          <Typography variant="body1" color="text.primary">
+          <Typography
+            sx={{ marginBottom: 5 }}
+            variant="body1"
+            color="text.primary"
+          >
             {review_body}
           </Typography>
-          <Paper elevation={1} className="vote-button" sx={{ width: 100 }}>
+          <Paper elevation={1} className="vote-button" sx={{ width: 100, alignContent: 'left' }}>
             <Typography className="heart-button" sx={{ bgcolor: pink[900] }}>
               <HeartButton
                 review_id={review_id}

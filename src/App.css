@@ -9,27 +9,39 @@
   --floral-white: #fff9ec;
 }
 
-html {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   background-color: var(--old-mauve);
 }
 
-.vote-button {
-  margin: 20px auto;
-  margin-bottom: 0;
-}
-
-.single-review-title {
-  color: #5d2a42;
+main {
+  margin: 0;
 }
 
 .App {
-  text-align: center;
   font-family: 'League Spartan', sans-serif;
   background-image: linear-gradient(
     var(--floral-white),
     var(--fiery-rose),
     var(--old-mauve)
   );
+}
+
+.vote-button {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.single-review-title {
+  color: #5d2a42;
+  padding: 20px 0;
+  padding-bottom: 30px;
+  text-transform: capitalize;
 }
 
 .list-card {
@@ -87,8 +99,43 @@ html {
 
 .heart-button {
   border-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .order-toggle {
-  margin: 20px;
+  margin-right: 20px;
+  width: 24px;
+  align-self: flex-end;
+}
+
+.designer-text {
+  font-style: italic;
+  padding: 3px 15px;
+}
+
+.home-button {
+  width: fit-content;
+  display: flex;
+  gap: 0;
+  justify-content: left;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.home-button:hover {
+  gap: 5px;
+}
+
+.view-comment-toggle {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.order-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
