@@ -60,7 +60,10 @@ export const Nav = ({
 
   return (
     <div className="nav">
-      <FormControl className={classes.root} sx={{width: '50%', marginLeft: 1}}>
+      <FormControl
+        className={classes.root}
+        sx={{ width: '50%', marginLeft: 1 }}
+      >
         <InputLabel id="category-select">Change category</InputLabel>
         <Select
           labelId="category-select"
@@ -70,11 +73,15 @@ export const Nav = ({
           label="Change category"
           onChange={handleCategoryChange}
         >
-          <MenuItem value={'All'}>ALL</MenuItem>
+          <MenuItem value={'All'}>All</MenuItem>
           {categories.map((c) => {
             return (
-              <MenuItem value={c.slug} key={c.slug}>
-                {c.slug.toUpperCase().replace(/-/g, ' ')}
+              <MenuItem
+                className="category-menu-item"
+                value={c.slug}
+                key={c.slug}
+              >
+                {c.slug.replace(/-/g, ' ')}
               </MenuItem>
             );
           })}

@@ -42,9 +42,6 @@ export const SingleCategory = ({
         order={order}
         setOrder={setOrder}
       />
-      <h1 className="category-name">
-        {category.toUpperCase().replace(/-/g, ' ')}
-      </h1>
       {reviews.map(
         ({
           review_id,
