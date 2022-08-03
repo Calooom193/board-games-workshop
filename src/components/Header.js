@@ -11,8 +11,6 @@ export const Header = ({ setCategorySelected, setSortSelected }) => {
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [users, setUsers] = useState([]);
 
-  console.log(userLoggedIn);
-
   useEffect(() => {
     getUsers().then(({ users }) => {
       setUsers(users);

@@ -15,8 +15,9 @@ import {
 import { makeStyles } from '@material-ui/styles';
 import { grey, pink } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { deleteComment, getComments, postComment } from '../Api';
+import { UserContext } from '../contexts/User';
 
 const theme = createTheme({
   palette: {
@@ -59,6 +60,9 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
   const [input, setInput] = useState('');
   const [username] = useState('tickle122');
   const classes = useStyles();
+  const { userLoggedIn, setUserLoggedIn } = useContext(UserContext);
+
+  console.log(userLoggedIn);
 
   useEffect(() => {
     setIsLoading(true);
@@ -156,7 +160,7 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
       </div>
 
       {comments.map(({ author, body, created_at, comment_id }) => {
-        if (author === username) {
+        if (author === userLoggedIn) {
           return (
             <div key={comment_id}>
               <ListItem className="comment-item" alignItems="flex-start">

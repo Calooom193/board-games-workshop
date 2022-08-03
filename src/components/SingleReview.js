@@ -1,12 +1,4 @@
-import {
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Paper,
-  Typography,
-} from '@mui/material';
+import { Card, CardContent, CardMedia, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReview } from '../Api';
@@ -89,7 +81,11 @@ export const SingleReview = () => {
           >
             {review_body}
           </Typography>
-          <Paper elevation={1} className="vote-button" sx={{ width: 100, alignContent: 'left' }}>
+          <Paper
+            elevation={1}
+            className="vote-button"
+            sx={{ width: 100, alignContent: 'left' }}
+          >
             <Typography className="heart-button" sx={{ bgcolor: pink[900] }}>
               <HeartButton
                 review_id={review_id}
