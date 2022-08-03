@@ -22,8 +22,11 @@ export const Header = ({ setCategorySelected, setSortSelected }) => {
   };
 
   const handleUserSelect = (username) => {
+    if (!username) {
+      setUserLoggedIn(null);
+    }
     setUserLoggedIn(username);
-    setDropDownOpen(false)
+    setDropDownOpen(false);
   };
 
   return (
@@ -46,6 +49,16 @@ export const Header = ({ setCategorySelected, setSortSelected }) => {
         </Avatar>
         {dropDownOpen ? (
           <div className="login-dropdown">
+            {userLoggedIn ? (
+              <div
+                className="dropdown-username"
+                onClick={() => handleUserSelect()}
+              >
+                <div className="username-text logout-text">Logout</div>
+              </div>
+            ) : (
+              <></>
+            )}
             {users.map((user) => (
               <div
                 className="dropdown-username"

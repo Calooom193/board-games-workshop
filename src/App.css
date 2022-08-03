@@ -108,6 +108,10 @@ main {
   margin-left: 10px;
 }
 
+.logout-text {
+  color: var(--fiery-rose);
+}
+
 .nav {
   margin-top: 15px;
 }
