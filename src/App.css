@@ -35,6 +35,7 @@ main {
 .vote-button {
   margin-bottom: 0;
   text-align: center;
+  margin-left: 2px;
 }
 
 .single-review-title {
@@ -177,7 +178,7 @@ main {
 .view-comment-toggle {
   display: flex;
   align-items: center;
-  margin-left: 8px;
+  margin-left: 5px;
 }
 
 .order-container {
@@ -185,4 +186,20 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.empty-field-text {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  margin-top: 3px;
+  color: #d50000;
+}
+
+.empty-field-text h5 {
+  color: var(--old-mauve);
+  font-weight: 600;
+  font-size: 16px;
+  margin-left: 4px;
+  width: 80px;
 }

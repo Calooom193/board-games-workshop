@@ -14,7 +14,7 @@ function App() {
   const [categorySelected, setCategorySelected] = useState('');
   const [categories, setCategories] = useState([]);
   const [order, setOrder] = useState('ASC');
-  const [userLoggedIn, setUserLoggedIn] = useState('');
+  const [userLoggedIn, setUserLoggedIn] = useState(null);
 
   useEffect(() => {
     getCategories().then(({ categories }) => {

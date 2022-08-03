@@ -13,7 +13,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { makeStyles } from '@material-ui/styles';
-import { grey, pink } from '@mui/material/colors';
+import { grey, pink, red } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext, useEffect, useState } from 'react';
 import { deleteComment, getComments, postComment } from '../Api';
@@ -51,18 +51,26 @@ const useStyles = makeStyles({
       borderBottomColor: pink[900],
     },
   },
+  invalid: {
+    // input label when focused
+    '& label.Mui-focused': {
+      color: red[700],
+    },
+    // focused color for input with variant='standard'
+    '& .MuiInput-underline:after': {
+      borderBottomColor: red[700],
+    },
+  },
 });
 
-export const CommentsToggle = ({ review_id, comment_count }) => {
+export const CommentsToggle = ({ review_id }) => {
+  const { userLoggedIn, setUserLoggedIn } = useContext(UserContext);
+  const classes = useStyles();
+  const [input, setInput] = useState('');
   const [comments, setComments] = useState([]);
   const [collapsed, setCollapsed] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [input, setInput] = useState('');
-  const [username] = useState('tickle122');
-  const classes = useStyles();
-  const { userLoggedIn, setUserLoggedIn } = useContext(UserContext);
-
-  console.log(userLoggedIn);
+  const [invalid, setInvalid] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -79,19 +87,24 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    postComment(review_id, username, input)
-      .then((data) => {
-        setIsLoading(false);
-        setComments((currComments) => {
-          return [...currComments, data.comment[0]];
+    if (input) {
+      setInvalid(false);
+      setIsLoading(true);
+      postComment(review_id, userLoggedIn, input)
+        .then((data) => {
+          setIsLoading(false);
+          setComments((currComments) => {
+            return [...currComments, data.comment[0]];
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setCollapsed(false);
-    setInput('');
+      setCollapsed(false);
+      setInput('');
+    } else {
+      setInvalid(true);
+    }
   };
 
   const handleDelete = (id) => {
@@ -222,39 +235,56 @@ export const CommentsToggle = ({ review_id, comment_count }) => {
           );
         }
       })}
-      <Box
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
-          display: 'flex',
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit}
-      >
-        <TextField
-          className={classes.root}
-          id="standard-basic"
-          label="Write a comment..."
-          variant="standard"
-          value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-          }}
-        />
-        <Button
-          type="submit"
-          sx={{
-            color: pink[900],
-            justifyContent: 'left',
-            alignItems: 'flex-end',
-          }}
-        >
-          Post
-        </Button>
-      </Box>
+
+      {userLoggedIn !== null ? (
+        <div className=''>
+          <Box
+            component="form"
+            sx={{
+              '& > :not(style)': { m: 0.5, width: '25ch' },
+              display: 'flex',
+              alignContent: 'center',
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              focused={invalid}
+              className={!invalid ? classes.root : classes.invalid}
+              id="standard-basic"
+              label="Write a comment..."
+              variant="standard"
+              value={input}
+              onChange={(e) => {
+                setInvalid(false);
+                setInput(e.target.value);
+              }}
+            />
+            <Button
+              type="submit"
+              sx={{
+                color: pink[900],
+                width: 1,
+                justifyContent: 'right',
+                alignItems: 'flex-end',
+              }}
+            >
+              Post
+            </Button>
+          </Box>
+          {invalid ? (
+            <div className="empty-field-text">
+              <h5>Empty field:</h5>
+              <p>Please provide some text to post a comment.</p>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      ) : (
+        <></>
+      )}
     </List>
   );
 };
