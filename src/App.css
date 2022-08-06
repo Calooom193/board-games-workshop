@@ -26,10 +26,19 @@ main {
 .App {
   font-family: 'League Spartan', sans-serif;
   background-image: linear-gradient(
+    #fff,
     var(--floral-white),
-    var(--fiery-rose),
-    var(--old-mauve)
+    var(--fiery-rose)
   );
+}
+
+.post-review {
+  background-image: linear-gradient(
+    #fff,
+    var(--floral-white),
+    var(--fiery-rose)
+  );
+  height: 100vh;
 }
 
 .vote-button {

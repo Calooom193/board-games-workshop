@@ -4,7 +4,7 @@ import { getCategories } from './Api';
 import './App.css';
 import { AllReviews } from './components/AllReviews';
 import { Header } from './components/Header';
-import { SignIn } from './components/SignIn';
+import { PostReview } from './components/PostReview';
 import { SingleCategory } from './components/SingleCategory';
 import { SingleReview } from './components/SingleReview';
 import { UserContext } from './contexts/User';
@@ -60,7 +60,7 @@ function App() {
               }
             />
             <Route path="/review/:review_id" element={<SingleReview />} />
-            <Route path="/login" element={<SignIn />} />
+            <Route path="/review/post-review" element={<PostReview categories={categories}/>} />
           </Routes>
         </div>
       </BrowserRouter>
