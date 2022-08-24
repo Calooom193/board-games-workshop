@@ -1,9 +1,18 @@
-import { Avatar } from '@mui/material';
+import { Avatar, Button, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { pink } from '@mui/material/colors';
 import { useContext, useEffect, useState } from 'react';
 import { getUsers } from '../Api';
 import { UserContext } from '../contexts/User';
+import { createTheme } from '@mui/material';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: pink[50],
+    },
+  },
+});
 
 export const Header = ({ setCategorySelected, setSortSelected }) => {
   let navigate = useNavigate();
@@ -31,6 +40,19 @@ export const Header = ({ setCategorySelected, setSortSelected }) => {
 
   return (
     <div className="header">
+      {userLoggedIn ? (
+        <ThemeProvider theme={theme}>
+          <Button
+            sx={{ position: 'fixed' }}
+            className="write-review-button"
+            onClick={() => {navigate(`/review/post-review`)}}
+          >
+            Write a review
+          </Button>
+        </ThemeProvider>
+      ) : (
+        <></>
+      )}
       <h1
         onClick={() => {
           setCategorySelected('');

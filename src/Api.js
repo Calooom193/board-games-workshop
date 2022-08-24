@@ -38,7 +38,29 @@ export const postComment = (review_id, username, body) => {
   return gamesApi
     .post(`/reviews/${review_id}/comments`, { username, body })
     .then((res) => {
-      console.log(res.data);
+      return res.data;
+    });
+};
+
+export const postReview = (
+  owner,
+  title,
+  review_body,
+  designer,
+  category,
+  review_img_url
+) => {
+
+  return gamesApi
+    .post(`/reviews`, {
+      owner,
+      title,
+      review_body,
+      designer,
+      category,
+      review_img_url,
+    })
+    .then((res) => {
       return res.data;
     });
 };

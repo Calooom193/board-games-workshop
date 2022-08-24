@@ -1,4 +1,3 @@
-import { Info } from '@mui/icons-material';
 import ImageIcon from '@mui/icons-material/Image';
 import {
   Box,
@@ -10,7 +9,10 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import { pink } from '@mui/material/colors';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { postReview } from '../Api';
+import { UserContext } from '../contexts/User';
 import { GoHomeButton } from './GoHomeButton';
 
 const theme = createTheme({
@@ -25,22 +27,109 @@ const theme = createTheme({
 });
 
 export const PostReview = ({ categories }) => {
+  let navigate = useNavigate();
+  const { userLoggedIn, setUserLoggedIn } = useContext(UserContext);
   const [categorySelected, setCategorySelected] = useState('');
-  const [createCategory, setCreateCategory] = useState(false);
+  const [title, setTitle] = useState('');
+  const [designer, setDesigner] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+  const [reviewBody, setReviewBody] = useState('');
+  const [invalidTitle, setInvalidTitle] = useState(false);
+  const [invalidDesigner, setInvalidDesigner] = useState(false);
+  const [invalidImgUrl, setInvalidImgUrl] = useState(false);
+  const [invalidReviewBody, setInvalidReviewBody] = useState(false);
+  const [invalidCategory, setInvalidCategory] = useState(false);
+  const [invalidUser, setInvalidUser] = useState(false);
+  const [reviewPosted, setReviewPosted] = useState({});
+  const [hasPosted, setHasPosted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (hasPosted) {
+      navigate(`/review/${reviewPosted.review_id}`, { replace: true });
+    }
+  }, [hasPosted]);
+
+  useEffect(() => {
+    if (userLoggedIn) {
+      setInvalidUser(false);
+    }
+  }, [userLoggedIn]);
+
+  const handleTitle = (e) => {
+    setInvalidTitle(false);
+    setTitle(e.target.value);
+  };
+
+  const handleDesigner = (e) => {
+    setInvalidDesigner(false);
+    setDesigner(e.target.value);
+  };
+
+  const handleImgUrl = (e) => {
+    setInvalidImgUrl(false);
+    setImgUrl(e.target.value);
+  };
+
+  const handleReviewBody = (e) => {
+    setInvalidReviewBody(false);
+    setReviewBody(e.target.value);
+  };
 
   const handleCategorySelected = (e) => {
-    if (e.target.value === 'create') {
-      setCreateCategory(true);
-      setCategorySelected('');
+    setInvalidCategory(false);
+    setCategorySelected(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!userLoggedIn) {
+      setInvalidUser(true);
+    } else if (title.length === 0) {
+      setInvalidTitle(true);
+    } else if (designer.length === 0) {
+      setInvalidDesigner(true);
+    } else if (imgUrl.length === 0) {
+      setInvalidImgUrl(true);
+    } else if (reviewBody.length === 0) {
+      setInvalidReviewBody(true);
+    } else if (categorySelected.length === 0) {
+      setInvalidCategory(true);
     } else {
-      setCreateCategory(false);
-      setCategorySelected(e.target.value);
+      setIsLoading(true);
+      postReview(
+        userLoggedIn,
+        title,
+        reviewBody,
+        designer,
+        categorySelected,
+        imgUrl
+      )
+        .then(({ review }) => {
+          setReviewPosted(review[0]);
+          setIsLoading(false);
+          setHasPosted(true);
+        })
+        .catch((err) => {
+          setHasPosted(false);
+          setIsLoading(false);
+          console.log(err);
+        });
     }
   };
 
+  if (isLoading) return <h1>Loading...</h1>;
   return (
     <div className="post-review">
       <GoHomeButton />
+      {invalidUser ? (
+        <div className="invalid-user">
+          <h5>Please Log in to post a review.</h5>
+        </div>
+      ) : (
+        <></>
+      )}
       <Box
         sx={{
           '& > :not(style)': {
@@ -56,6 +145,10 @@ export const PostReview = ({ categories }) => {
           id="input-with-icon-textfield"
           label="Title"
           variant="standard"
+          error={invalidTitle}
+          helperText={invalidTitle ? 'Required*' : ''}
+          value={title}
+          onChange={handleTitle}
           placeholder="Give your review a quirky title!"
         />
         <TextField
@@ -63,12 +156,20 @@ export const PostReview = ({ categories }) => {
           id="input-with-icon-textfield"
           label="Designer"
           variant="standard"
+          error={invalidDesigner}
+          helperText={invalidDesigner ? 'Required*' : ''}
+          value={designer}
+          onChange={handleDesigner}
           placeholder="Who designed the game?"
         />
         <TextField
           sx={{ paddingBottom: 0 }}
           id="input-with-icon-textfield"
           label="Image URL"
+          value={imgUrl}
+          onChange={handleImgUrl}
+          error={invalidImgUrl}
+          helperText={invalidImgUrl ? 'Required*' : ''}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -84,7 +185,11 @@ export const PostReview = ({ categories }) => {
           label="Review"
           multiline
           rows={4}
+          error={invalidReviewBody}
+          helperText={invalidReviewBody ? 'Required*' : ''}
           variant="standard"
+          value={reviewBody}
+          onChange={handleReviewBody}
           placeholder="Create your most eloquent review..."
         />
         <TextField
@@ -94,10 +199,10 @@ export const PostReview = ({ categories }) => {
           label="Category"
           value={categorySelected}
           onChange={handleCategorySelected}
-          helperText="Please select a category that best describes the board game you are reviewing, or just create a new one!"
+          error={invalidCategory}
+          helperText={invalidCategory ? 'Required*' : ''}
           variant="standard"
         >
-          <MenuItem value="create">Create a category...</MenuItem>
           {categories.map((c) => {
             return (
               <MenuItem
@@ -110,17 +215,7 @@ export const PostReview = ({ categories }) => {
             );
           })}
         </TextField>
-        {createCategory ? (
-          <TextField
-            sx={{ paddingBottom: 0 }}
-            id="input-with-icon-textfield"
-            label="Create a category"
-            variant="standard"
-            placeholder="Think about broad topics your game might fit into."
-          />
-        ) : (
-          <></>
-        )}
+
         <ThemeProvider theme={theme}>
           <Button
             type="submit"
@@ -129,6 +224,7 @@ export const PostReview = ({ categories }) => {
               width: 0.92,
             }}
             variant="contained"
+            onClick={handleSubmit}
           >
             Post
           </Button>
@@ -137,5 +233,3 @@ export const PostReview = ({ categories }) => {
     </div>
   );
 };
-
-// owner, title, review_body, designer, category, review_img_url

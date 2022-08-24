@@ -1,7 +1,7 @@
 import { Button, createTheme, ThemeProvider } from '@mui/material';
 import { pink } from '@mui/material/colors';
-import { Link, useNavigate } from 'react-router-dom';
-import { HomeIcon } from './HomeIcon';
+import { useNavigate } from 'react-router-dom';
+
 
 const theme = createTheme({
   palette: {
@@ -43,7 +43,7 @@ export const GoHomeButton = ({ review_id }) => {
           variant="text"
           sx={{ paddingLeft: '0px', justifyContent: 'left' }}
         >
-          Back
+          home
         </Button>
       </div>
     </ThemeProvider>
