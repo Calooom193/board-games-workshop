@@ -15,6 +15,7 @@ export const AllReviews = ({
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [itemDeleted, setItemDeleted] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -27,7 +28,7 @@ export const AllReviews = ({
         setError(true);
         console.log(err);
       });
-  }, [sortSelected, order]);
+  }, [sortSelected, order, itemDeleted]);
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
@@ -61,6 +62,7 @@ export const AllReviews = ({
                 category={category}
                 created_at={created_at}
                 votes={votes}
+                setItemDeleted={setItemDeleted}
               />
             </div>
           );

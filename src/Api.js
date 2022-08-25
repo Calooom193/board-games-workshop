@@ -50,7 +50,6 @@ export const postReview = (
   category,
   review_img_url
 ) => {
-
   return gamesApi
     .post(`/reviews`, {
       owner,
@@ -71,4 +70,8 @@ export const deleteComment = (review_id) => {
 
 export const getUsers = () => {
   return gamesApi.get(`/users`).then((res) => res.data);
+};
+
+export const deleteReview = (review_id) => {
+  return gamesApi.delete(`/reviews/${review_id}`);
 };

@@ -17,6 +17,8 @@ export const SingleCategory = ({
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [itemDeleted, setItemDeleted] = useState(false);
+
 
   useEffect(() => {
     getReviews(category, sortSelected, order)
@@ -28,7 +30,7 @@ export const SingleCategory = ({
         setError(true);
         console.log(err);
       });
-  }, [category, sortSelected, order]);
+  }, [category, sortSelected, order, itemDeleted]);
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
@@ -62,6 +64,7 @@ export const SingleCategory = ({
                 category={category}
                 created_at={created_at}
                 votes={votes}
+                setItemDeleted={setItemDeleted}
               />
             </div>
           );

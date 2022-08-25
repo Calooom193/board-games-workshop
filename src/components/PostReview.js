@@ -27,6 +27,8 @@ const theme = createTheme({
 });
 
 export const PostReview = ({ categories }) => {
+  const regex =
+    /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
   let navigate = useNavigate();
   const { userLoggedIn, setUserLoggedIn } = useContext(UserContext);
   const [categorySelected, setCategorySelected] = useState('');
@@ -91,6 +93,8 @@ export const PostReview = ({ categories }) => {
     } else if (designer.length === 0) {
       setInvalidDesigner(true);
     } else if (imgUrl.length === 0) {
+      setInvalidImgUrl(true);
+    } else if (!regex.test(imgUrl)) {
       setInvalidImgUrl(true);
     } else if (reviewBody.length === 0) {
       setInvalidReviewBody(true);
@@ -169,7 +173,7 @@ export const PostReview = ({ categories }) => {
           value={imgUrl}
           onChange={handleImgUrl}
           error={invalidImgUrl}
-          helperText={invalidImgUrl ? 'Required*' : ''}
+          helperText={invalidImgUrl ? 'Required* Invalid URL' : ''}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
