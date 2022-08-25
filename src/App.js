@@ -1,7 +1,7 @@
+import './App.css';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { getCategories } from './Api';
-import './App.css';
 import { AllReviews } from './components/AllReviews';
 import { ErrorPage } from './components/ErrorPage';
 import { Header } from './components/Header';
