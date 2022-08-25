@@ -2,6 +2,7 @@ import { Backdrop, CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReviews } from '../Api';
+import { ErrorPage } from './ErrorPage';
 import { ListReviewCard } from './ListReviewCard';
 import { Nav } from './Nav';
 
@@ -17,9 +18,8 @@ export const SingleCategory = ({
   const { category } = useParams();
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const [itemDeleted, setItemDeleted] = useState(false);
-
 
   useEffect(() => {
     getReviews(category, sortSelected, order)
@@ -28,10 +28,11 @@ export const SingleCategory = ({
         setReviews(reviews);
       })
       .catch((err) => {
-        setError(true);
-        console.log(err);
+        setError(err);
       });
   }, [category, sortSelected, order, itemDeleted]);
+
+  if (error) return <ErrorPage error={error} />;
 
   if (isLoading)
     return (

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { getCategories } from './Api';
 import './App.css';
 import { AllReviews } from './components/AllReviews';
+import { ErrorPage } from './components/ErrorPage';
 import { Header } from './components/Header';
 import { PostReview } from './components/PostReview';
 import { SingleCategory } from './components/SingleCategory';
@@ -31,6 +32,7 @@ function App() {
             setSortSelected={setSortSelected}
           />
           <Routes>
+            <Route path="*" element={<ErrorPage />} />
             <Route
               path="/"
               element={
@@ -60,7 +62,10 @@ function App() {
               }
             />
             <Route path="/review/:review_id" element={<SingleReview />} />
-            <Route path="/review/post-review" element={<PostReview categories={categories}/>} />
+            <Route
+              path="/review/post-review"
+              element={<PostReview categories={categories} />}
+            />
           </Routes>
         </div>
       </BrowserRouter>

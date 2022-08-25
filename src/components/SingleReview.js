@@ -1,4 +1,12 @@
-import { Backdrop, Card, CardContent, CardMedia, CircularProgress, Paper, Typography } from '@mui/material';
+import {
+  Backdrop,
+  Card,
+  CardContent,
+  CardMedia,
+  CircularProgress,
+  Paper,
+  Typography,
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReview } from '../Api';
@@ -7,12 +15,13 @@ import { pink } from '@mui/material/colors';
 import { GoHomeButton } from './GoHomeButton';
 import { CommentsToggle } from './CommentsToggle';
 import { LoadingButton } from '@mui/lab';
+import { ErrorPage } from './ErrorPage';
 
 export const SingleReview = () => {
   const { review_id } = useParams();
   const [review, setReview] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const [voteLoading, setVoteLoading] = useState(false);
 
   useEffect(() => {
@@ -23,8 +32,7 @@ export const SingleReview = () => {
         setReview(data.review[0]);
       })
       .catch((err) => {
-        setError(true);
-        console.log(err);
+        setError(err);
       });
   }, []);
 
@@ -38,6 +46,8 @@ export const SingleReview = () => {
     review_body,
     votes,
   } = review;
+
+  if (error) return <ErrorPage error={error} />;
 
   if (isLoading)
     return (
