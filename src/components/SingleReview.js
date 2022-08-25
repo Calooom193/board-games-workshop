@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Paper, Typography } from '@mui/material';
+import { Backdrop, Card, CardContent, CardMedia, CircularProgress, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReview } from '../Api';
@@ -39,7 +39,15 @@ export const SingleReview = () => {
     votes,
   } = review;
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading)
+    return (
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   return (
     <div className="single-review">
       <Card>

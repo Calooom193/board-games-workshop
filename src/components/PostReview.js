@@ -1,7 +1,9 @@
 import ImageIcon from '@mui/icons-material/Image';
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   createTheme,
   InputAdornment,
   MenuItem,
@@ -123,7 +125,15 @@ export const PostReview = ({ categories }) => {
     }
   };
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading)
+    return (
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   return (
     <div className="post-review">
       <GoHomeButton />

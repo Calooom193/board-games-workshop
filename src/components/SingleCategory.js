@@ -1,3 +1,4 @@
+import { Backdrop, CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReviews } from '../Api';
@@ -32,7 +33,15 @@ export const SingleCategory = ({
       });
   }, [category, sortSelected, order, itemDeleted]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading)
+    return (
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   return (
     <main className="single-category">
       <Nav

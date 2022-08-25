@@ -1,3 +1,4 @@
+import { Backdrop, CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getReviews } from '../Api';
 import { ListReviewCard } from './ListReviewCard';
@@ -30,7 +31,15 @@ export const AllReviews = ({
       });
   }, [sortSelected, order, itemDeleted]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading)
+    return (
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   return (
     <main className="allreviews">
       <Nav

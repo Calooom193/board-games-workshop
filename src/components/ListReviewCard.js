@@ -1,10 +1,12 @@
 import {
+  Backdrop,
   Button,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   createTheme,
   IconButton,
   ThemeProvider,
@@ -35,7 +37,7 @@ export const ListReviewCard = ({
   votes,
   setItemDeleted,
 }) => {
-  const { userLoggedIn, setUserLoggedIn } = useContext(UserContext);
+  const { userLoggedIn } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = (id) => {
@@ -52,7 +54,15 @@ export const ListReviewCard = ({
       });
   };
 
-
+  if (isLoading)
+    return (
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   return (
     <Card className="list-card" sx={{ maxWidth: 345 }}>
       <CardActionArea sx={{ bgcolor: blueGrey[900] }}>
