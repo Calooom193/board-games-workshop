@@ -88,6 +88,7 @@ export const SingleReview = () => {
           >
             <Typography className="heart-button" sx={{ bgcolor: pink[900] }}>
               <HeartButton
+                owner={owner}
                 review_id={review_id}
                 setReview={setReview}
                 votes={votes}

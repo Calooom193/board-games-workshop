@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import { pink } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { patchVotes } from '../Api';
+import { UserContext } from '../contexts/User';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -16,7 +17,13 @@ const theme = createTheme({
   },
 });
 
-export const HeartButton = ({ review_id, setReview, setVoteLoading }) => {
+export const HeartButton = ({
+  review_id,
+  setReview,
+  setVoteLoading,
+  owner,
+}) => {
+  const { userLoggedIn } = useContext(UserContext);
   const [pressed, setPressed] = useState(null);
 
   const incVotes = (e) => {
@@ -53,6 +60,7 @@ export const HeartButton = ({ review_id, setReview, setVoteLoading }) => {
       <Checkbox
         className="heart-button"
         onClick={incVotes}
+        disabled={!userLoggedIn || userLoggedIn === owner}
         color="primary"
         {...label}
         icon={<FavoriteBorder color="primary" />}

@@ -52,6 +52,7 @@ export const ListReviewCard = ({
       });
   };
 
+
   return (
     <Card className="list-card" sx={{ maxWidth: 345 }}>
       <CardActionArea sx={{ bgcolor: blueGrey[900] }}>
@@ -78,7 +79,6 @@ export const ListReviewCard = ({
       <CardActions sx={{ bgcolor: pink[900] }}>
         <ThemeProvider theme={theme}>
           <Button size="small" color="primary">
-            {/* <p className="hearts">Hearts: </p>  */}
             <FavoriteIcon color="primary" sx={{ marginRight: '10px' }} />
             {votes}
           </Button>
